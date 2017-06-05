@@ -1,0 +1,17 @@
+#loginForm{
+    width: 300px;
+}
+
+#loginButton{
+    width: inherit;
+}
+
+.color-picker-box {
+    display:block;
+    border-top:1px solid;
+    border-color:inherit;
+    float:left;
+    width:10%;
+    height:16px;
+    cursor:pointer;
+}
