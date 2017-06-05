@@ -40,6 +40,9 @@ userModule.controller('userController', [
             userService.login($scope.userToLogin).then(function(response){
                 notify.success('You are successfully logged in!');
                 $state.go('event');
+            },
+            function(error){
+                notify.error(error);
             });
         };
 

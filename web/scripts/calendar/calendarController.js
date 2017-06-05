@@ -25,8 +25,8 @@ calendarModule.controller('calendarController', [
                     calendarService.updateEvent(event, isForm);
                 },
 
-                $scope.deleteEvent = function(id){
-                    calendarService.deleteEvent(id);
+                $scope.deleteEvent = function(event){
+                    calendarService.deleteEvent(event);
                 },
 
                 calendarService.getEvents().then(function(response){
@@ -48,7 +48,7 @@ calendarModule.controller('calendarController', [
                     });
                     $scope.SelectedEvent = null;
                     $scope.uiConfig = {
-                        height: 650,
+                        height: 550,
                         editable: true,
                         selectable: true,
                         selectHelper: true,
@@ -99,7 +99,7 @@ calendarModule.controller('calendarController', [
                         },
 
                         eventMouseout: function(event, jsEvent, view){
-                            $(this).css('border-color', 'white');
+                            $(this).css('border-color', event.color);
                         },
 
                         //updateEvent on month Agenda

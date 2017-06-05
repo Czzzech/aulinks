@@ -47,6 +47,7 @@
                 <ul class="nav navbar-nav">
                     <li ng-if="user.isValid"><a href="#!/event">Calendar</a></li>
                     <li ng-if="user.isAdmin"><a href="#!/user/invite">Invite user</a></li>
+                    <li ng-if="user.isAdmin"><a target="_blank" href="/dayside/">See code</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-if="user.isValid"><a href="#" ng-click="logout()">Logout({{user.email}})</a></li>

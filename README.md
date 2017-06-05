@@ -64,6 +64,8 @@ Password: 123
 
 Only admin can invite new member. You can do nothing without invitation.
 
+Only admin can see dayside link to see code. http://perevozniy.000webhostapp.com/dayside/ 
+
 To implement project on your server you must do next:
 1. Configure back/config/web.php - emailer;
 2. Configure back/config/db.php - database;
@@ -72,4 +74,4 @@ To implement project on your server you must do next:
 
 There are many hardcoding) Sorry for that but no time for refactoring!
 
-Cheers it was amazing and interesting!
+Thanks a lot!!! It was very interesting!

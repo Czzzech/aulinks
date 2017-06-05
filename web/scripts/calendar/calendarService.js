@@ -12,6 +12,10 @@ calendarModule.service("calendarService", [
             },
             
             createEvent: function (event) {
+                if(moment(event.start) < moment(event.end)){
+                    notify.error('Start & end time are wrong!');
+                    return;
+                }
                 return $http.post(api + 'event/create', event).then(function(response) {
                     notify.success('Success!');
                     $('div#calendar').fullCalendar('renderEvent', response.data);
@@ -28,7 +32,7 @@ calendarModule.service("calendarService", [
             
             updateEvent: function (event, isForm) {
                 var start, end;
-                if(!isForm) {
+                if(isForm != 1) {
                     start = event.start.format("YYYY-MM-DD HH:mm:ss");
                     end = event.end.format("YYYY-MM-DD HH:mm:ss");
                 }else{
@@ -43,23 +47,28 @@ calendarModule.service("calendarService", [
                     end: end
                 };
                 return $http.post(api + 'event/update&id=' + _event.id, _event).then(function(response) {
-                        if(isForm)
-                            $('div#calendar').fullCalendar('updateEvent', response.data);
-                        notify.success('Success!');
+                    if(isForm == 1) {
+                        console.log(response.data);
+                        $('div#calendar').fullCalendar('updateEvent', response.data);
+                    }
+                    notify.success('Success!');
                     },
                     function (error) {
+                        console.log(error);
                         notify.error(error);
                     });
             },
             
-            deleteEvent: function (eventID) {
-                return $http.post(api + 'event/delete&id=' + eventID).then(function(response){
-                    console.log(eventID);
-                    $('div#calendar').fullCalendar('removeEvents', eventID);
+            deleteEvent: function (event) {
+                return $http.post(api + 'event/delete&id=' + event.id).then(function(response){
+                    console.log(event);
+                    $('div#calendar').fullCalendar('removeEvent', function(event){
+                        return true;
+                    });
                     notify.warning('Deleted!');
                 },
                 function(error){
-                    notify.error(error.data);
+                    notify.error(error);
                 });
             }
         }

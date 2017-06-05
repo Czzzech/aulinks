@@ -50,7 +50,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button ng-if="viewEvent.author == user.id || user.isAdmin" type="button" id="deleteButton" class="btn btn-danger" ng-click="deleteEvent(viewEvent.id)" data-dismiss="modal">Delete</button>
+                <button ng-if="viewEvent.author == user.id || user.isAdmin" type="button" id="deleteButton" class="btn btn-danger" ng-click="deleteEvent(viewEvent)" data-dismiss="modal">Delete</button>
                 <button ng-if="viewEvent.author == user.id || user.isAdmin" type="button" id="updateButton" class="btn btn-success" ng-click="updateEvent(viewEvent, 1)" data-dismiss="modal">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -67,6 +67,7 @@ $(document).ready(function () {
     });
 
     var elView = document.querySelector('input#colorPickerView');
+    console.log(elView);
     var colorPickerView = new CP(elView);
 
     colorPickerView.on("change", function (color) {
