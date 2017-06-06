@@ -1,9 +1,23 @@
 #loginForm{
+    margin: auto auto;
     width: 300px;
 }
 
 #loginButton{
     width: inherit;
+}
+
+.container{
+    margin: 60px auto;
+}
+
+#loading-bar .bar {
+    position: relative;
+}
+
+#calendar{
+    text-align: center;
+    margin: auto;
 }
 
 .color-picker-box {

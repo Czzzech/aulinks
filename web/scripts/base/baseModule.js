@@ -1,5 +1,5 @@
 'use strict';
-var api = "http://perevozniy.000webhostapp.com/back/web/index.php?r=";
+var api = "https://perevozniy.000webhostapp.com/back/web/index.php?r=";
 
 var app = angular.module('app', [
     'ui.router',

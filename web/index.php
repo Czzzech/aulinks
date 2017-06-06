@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
+    <link rel="icon" type="image/png" href="favicon.png">
   	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
   	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.min.css" />
   	<link rel="stylesheet" href="assets/ui-calendar/fullcalendar.css" />
@@ -39,7 +40,7 @@
 <body ng-controller="baseController" class="md-padding" id="popupContainer" ng-cloak>
 <div growl limit-messages="3"></div>
     <div ng-controller="userController">
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top navbar-nav">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#!/">Aulinks</a>
@@ -55,20 +56,15 @@
             </div>
         </nav>
 
-
     <!-- Begin page content -->
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8" align="center">
-                    <ui-view></ui-view>
-                </div>
-            </div>
+            <ui-view></ui-view>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container" align="center">
-            <p class="text-muted">Aulinks test</p>
+    <footer class="footer navbar navbar-inverse navbar-fixed-bottom">
+        <div class="navbar-text" style="width: 100%;text-align: center;">
+            <span class="text-muted">&copy; Aulinks <?php print(date('Y'));?></span>
         </div>
     </footer>
 

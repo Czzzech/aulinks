@@ -5,6 +5,11 @@ calendarModule.service("calendarService", [
     '$state',
     'notify',
     function($http, $location, $state, notify) {
+
+        function validTime(start, end){
+            return parseInt(moment(start).format('x')) < parseInt(moment(end).format('x'));
+        }
+
         return {
             
             getEvents: function () {
@@ -12,17 +17,11 @@ calendarModule.service("calendarService", [
             },
             
             createEvent: function (event) {
-                if(moment(event.start) < moment(event.end)){
-                    notify.error('Start & end time are wrong!');
+                if(!validTime(event.start, event.end)){
+                    notify.error('Start time must be earlier then end!');
                     return;
                 }
-                return $http.post(api + 'event/create', event).then(function(response) {
-                    notify.success('Success!');
-                    $('div#calendar').fullCalendar('renderEvent', response.data);
-                },
-                function (error) {
-                    notify.error(error);
-                });
+                return $http.post(api + 'event/create', event);
             },
             
             getEvent: function (eventID) {
@@ -31,45 +30,34 @@ calendarModule.service("calendarService", [
             },
             
             updateEvent: function (event, isForm) {
-                var start, end;
-                if(isForm != 1) {
-                    start = event.start.format("YYYY-MM-DD HH:mm:ss");
-                    end = event.end.format("YYYY-MM-DD HH:mm:ss");
-                }else{
-                    start = event.start;
-                    end = event.end;
-                }
                 var _event = {
                     id: event.id,
                     title: event.title,
                     description: event.description,
-                    start: start,
-                    end: end
-                };
-                return $http.post(api + 'event/update&id=' + _event.id, _event).then(function(response) {
-                    if(isForm == 1) {
-                        console.log(response.data);
-                        $('div#calendar').fullCalendar('updateEvent', response.data);
-                    }
-                    notify.success('Success!');
+                    start: function(){
+                        if(event.start != null) {
+                            if (isForm != 1) {
+                                return event.start.format('x');
+                            } else {
+                                return event.start;
+                            }
+                        }
                     },
-                    function (error) {
-                        console.log(error);
-                        notify.error(error);
-                    });
+                    end: function(){
+                        if(event.end != null) {
+                            if (isForm != 1) {
+                                return event.end.format('x');
+                            } else {
+                                return event.end;
+                            }
+                        }
+                    }
+                };
+                return $http.post(api + 'event/update&id=' + _event.id, _event);
             },
             
             deleteEvent: function (event) {
-                return $http.post(api + 'event/delete&id=' + event.id).then(function(response){
-                    console.log(event);
-                    $('div#calendar').fullCalendar('removeEvent', function(event){
-                        return true;
-                    });
-                    notify.warning('Deleted!');
-                },
-                function(error){
-                    notify.error(error);
-                });
+                return $http.post(api + 'event/delete&id=' + event.id);
             }
         }
     }]);

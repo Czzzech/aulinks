@@ -9,10 +9,14 @@ RewriteEngine On
 #RewriteCond %{REQUEST_URI} ^/dayside/.*
 #RewriteRule ^(.*)$ /../dayside/
 
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE,R=301]
+
 RewriteCond %{REQUEST_URI} !^/web/.*$
 RewriteCond %{REQUEST_URI} !^/dayside/.*$
 RewriteCond %{REQUEST_URI} !^/back/.*$
 RewriteRule ^(.*)$ /web/$1
+
 
 #RewriteCond %{REQUEST_FILENAME} -f
 #RewriteRule ^.*$ - [NC,L]

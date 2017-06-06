@@ -18,37 +18,71 @@ calendarModule.controller('calendarController', [
                     color: ''
                 },
                 $scope.createEvent = function(){
-                    calendarService.createEvent($scope.newEvent);
+                    console.log($scope.newEvent);
+                    calendarService.createEvent($scope.newEvent).then(function(response) {
+                        $scope.renderEvent(response.data);
+                        notify.success('Event #' + response.data.id + ' created!');
+                    },
+                    function (error) {
+                        notify.error(error);
+                    });
                 },
 
-                $scope.updateEvent = function(event, isForm){
-                    calendarService.updateEvent(event, isForm);
+                $scope.updateEvent = function(event){
+                    console.log(event);
+                    calendarService.updateEvent(event).then(function(response) {
+                        for(var i = 0;i < $scope.events.length;i++){
+                            if($scope.events[i].id == event.id)
+                                $scope.events.splice(i, 1);
+                        };
+                        $scope.renderEvent(event);
+                        $('#viewEvent').modal('toggle');
+                        notify.success('Updated!');
+                    },
+                    function (error) {
+                        console.log(error);
+                        notify.error(error);
+                    });
                 },
+
+                $scope.renderEvent = function(_event){
+                    $scope.events.push({
+                        id: _event.id,
+                        title: _event.title,
+                        description: _event.description,
+                        start: _event.start,
+                        end: _event.end,
+                        color: _event.color,
+                        textColor: 'black',
+                        editable: userService.canEdit(_event.author),
+                        author: _event.author,
+                        status: _event.status
+                    });
+                };
 
                 $scope.deleteEvent = function(event){
-                    calendarService.deleteEvent(event);
-                },
+                    calendarService.deleteEvent(event).then(function(response){
+                        $('#viewEvent').modal('toggle');
+                        for(var i = 0;i < $scope.events.length;i++){
+                            if($scope.events[i].id == event.id)
+                                $scope.events.splice(i, 1);
+                            };
+                        notify.warning('Event #' + event.id + ' deleted!');
+                    },
+                    function(error){
+                        notify.error(error.message);
+                    });
+                };
 
                 calendarService.getEvents().then(function(response){
                     //console.log(response.data);
                     $scope.events.slice(0, $scope.events.length);
                     angular.forEach(response.data, function(_event){
-                        $scope.events.push({
-                            id: _event.id,
-                            title: _event.title,
-                            description: _event.description,
-                            start: _event.start,
-                            end: _event.end,
-                            color: _event.color,
-                            textColor: 'black',
-                            editable: userService.canEdit(_event.author),
-                            author: _event.author,
-                            status: _event.status
-                        });
+                        $scope.renderEvent(_event);
                     });
                     $scope.SelectedEvent = null;
                     $scope.uiConfig = {
-                        height: 550,
+                        height: 600,
                         editable: true,
                         selectable: true,
                         selectHelper: true,
@@ -104,13 +138,13 @@ calendarModule.controller('calendarController', [
 
                         //updateEvent on month Agenda
                         eventDrop: function(event, delta, revertFunc, jsEvent, ui, view){
-                            calendarService.updateEvent(event);
+                            $scope.updateEvent(event);
                         },
 
                         //updateEvent on day Agenda
                         eventResize: function(event, delta, jsEvent, ui, view){
                             if(view.name !== 'month')
-                                calendarService.updateEvent(event);
+                                $scope.updateEvent(event);
                         },
 
                         //create on month agenda

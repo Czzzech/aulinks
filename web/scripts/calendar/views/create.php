@@ -21,20 +21,20 @@
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker1'>
                             <label>StartTime</label>
-                            <input required="required" name="newEvent.startTime" ng-model="newEvent.start" type='text' class="form-control" placeholder="StartTime"/>
+                            <input required="required" style="cursor: pointer;" name="newEvent.startTime" ng-model="newEvent.start" type='text' class="form-control" placeholder="StartTime"/>
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker2'>
                             <label>EndTime</label>
-                            <input required="required" name="newEvent.endTime" ng-model="newEvent.end" type='text' class="form-control" placeholder="End time"/>
+                            <input required="required" style="cursor: pointer;" name="newEvent.endTime" ng-model="newEvent.end" type='text' class="form-control" placeholder="End time"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class='input-group'>
                             <label>Choose background color</label>
-                            <input id='colorPicker' name="color" ng-model="newEvent.color" type='text' class="form-control" placeholder="Choose color"/>
+                            <input id='colorPicker' style="cursor: pointer;" name="color" ng-model="newEvent.color" type='text' class="form-control" placeholder="Choose color"/>
                         </div>
                     </div>
                 </form>
